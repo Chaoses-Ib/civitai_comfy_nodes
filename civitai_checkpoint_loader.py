@@ -12,7 +12,7 @@ import comfy.utils
 from nodes import CheckpointLoaderSimple
 
 from .CivitAI_Model import CivitAI_Model
-from .utils import short_paths_map, model_path
+from .utils import short_paths_map, model_path, parse_air
 
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -63,16 +63,7 @@ class CivitAI_Checkpoint_Loader:
             
         if ckpt_name == 'none':
         
-            ckpt_id = None
-            version_id = None
-            
-            if '@' in ckpt_air:
-                ckpt_id, version_id = ckpt_air.split('@')
-            else:
-                ckpt_id = ckpt_air
-                
-            ckpt_id = int(ckpt_id) if ckpt_id else None
-            version_id = int(version_id) if version_id else None
+            ckpt_id, version_id = parse_air(ckpt_air)
             
             checkpoint_paths = short_paths_map(CHECKPOINTS)
             if download_path:

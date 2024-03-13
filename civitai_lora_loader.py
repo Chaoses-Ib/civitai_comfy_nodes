@@ -11,7 +11,7 @@ import comfy.utils
 from nodes import LoraLoader
 
 from .CivitAI_Model import CivitAI_Model
-from .utils import short_paths_map, model_path
+from .utils import short_paths_map, model_path, parse_air
 
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -67,16 +67,7 @@ class CivitAI_LORA_Loader:
             
         if lora_name == 'none':
         
-            lora_id = None
-            version_id = None
-            
-            if '@' in lora_air:
-                lora_id, version_id = lora_air.split('@')
-            else:
-                lora_id = lora_air
-                
-            lora_id = int(lora_id) if lora_id else None
-            version_id = int(version_id) if version_id else None
+            lora_id, version_id = parse_air(lora_air)
             
             lora_paths = short_paths_map(LORAS)
             if download_path:
